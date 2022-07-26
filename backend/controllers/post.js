@@ -14,11 +14,17 @@ exports.uploadPost = async(req, res, next) => {
     }
 }
 
+// Get all posts from database
+exports.getAllPosts = async(req, res, next) => {
+    try {
+        let posts = await Post.find()
+        res.status(200).json(posts)
+    } catch (error) {
+        res.status(400).json({ error })
+    }
+}
+
 exports.likePost = async(req, res, next) => {
-    // like requete
-    // trouver le bon post
-    // user déjà like ? 
-    // màj 
     const filter = req.params.id
     const updateUsersLiked = { usersLiked: req.body.userId }
     

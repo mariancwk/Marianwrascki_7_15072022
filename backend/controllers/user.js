@@ -49,7 +49,7 @@ exports.signup = async(req, res, next) => {
         return res.status(500).json({ error })
     }
 
-    // Give a json web token (id + password) for authorization
+    // Give a json web token (id + password) for authentication
     res.status(200).json({
         userId: user._id,
         token: jwt.sign(
@@ -58,4 +58,13 @@ exports.signup = async(req, res, next) => {
             { expiresIn: '12h' }
         )
     })
+
+//     const jwtToken = jwt.sign(
+//         { userId: user._id },
+//         process.env.TOKEN_KEY, 
+//         { expiresIn: '1h' }
+//     )
+
+//     res.cookie('authCookie',jwtToken,{maxAge:90000,httpOnly:true })
+//     res.status(200).json({ message: "User logged in" }) 
 }

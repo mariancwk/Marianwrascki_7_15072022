@@ -2,11 +2,13 @@ const express = require('express')
 const mongoose = require('mongoose')
 const userRoutes = require('./routes/user')
 const postRoutes = require('./routes/post')
+const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
 const app = express()
 
 app.use(express.json())
+app.use(cookieParser())
 
 // Allow to connect mongoDB
 mongoose.connect(process.env.MONGODB_KEY, {
