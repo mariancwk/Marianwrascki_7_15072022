@@ -1,5 +1,4 @@
 import React from 'react';
-import './Logo.css'
 import LogoWhiteMode from '../../svg/LogoWhiteMode';
 
 const Logo = () => {

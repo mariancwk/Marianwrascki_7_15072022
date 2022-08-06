@@ -142,6 +142,11 @@
         width: 100%;
     }
 
+    .login-form .formInput {
+        width: 100%;
+        font-size: 18px;
+    }
+
     .login-form input {
         width: 95%;
         height: 50px;

@@ -3,6 +3,11 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
+const ROLE = {
+    ADMIN: 'admin',
+    BASIC: "basic"
+}
+
 // Singup a user in database
 exports.signup = async(req, res, next) => {
     let hash
@@ -16,7 +21,8 @@ exports.signup = async(req, res, next) => {
 
     const user = new User({
         email: req.body.email,
-        password: hash
+        password: hash,
+        role: ROLE.BASIC
     })
 
     //Check if the email is already used 
@@ -52,19 +58,11 @@ exports.signup = async(req, res, next) => {
     // Give a json web token (id + password) for authentication
     res.status(200).json({
         userId: user._id,
+        role: user.role,
         token: jwt.sign(
             { userId: user._id },
             process.env.TOKEN_KEY, 
             { expiresIn: '12h' }
         )
     })
-
-//     const jwtToken = jwt.sign(
-//         { userId: user._id },
-//         process.env.TOKEN_KEY, 
-//         { expiresIn: '1h' }
-//     )
-
-//     res.cookie('authCookie',jwtToken,{maxAge:90000,httpOnly:true })
-//     res.status(200).json({ message: "User logged in" }) 
 }

@@ -1,0 +1,45 @@
+.post-component {
+    height: 100%;
+}
+
+.post-component form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.post-component textarea {
+    width: 90%;
+    height: 130px;
+}
+
+.post-options--img {
+    display: none;
+}
+
+.post-img--preview {
+    width: 20%;
+}
+
+.post-img--preview img{
+    width: 100%;
+}
+
+.editPost-img {
+    max-width: 273px;
+}
+
+.editPost-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+}
+
+.editPost-popup form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

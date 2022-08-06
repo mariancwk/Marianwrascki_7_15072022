@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import PostCard from '../components/PostCard';
-import Header from '../components/Header'
+import PostCard from '../components/PostCard/PostCard';
+import Header from '../components/Header/Header'
 const axios = require('axios')
 
 const Feed = () => {
@@ -15,8 +15,13 @@ const Feed = () => {
         <div>
             <Header />
             <div className="postContainer">
-                <div className="postCard">
-                    {postData.map((post) => (
+                <div className="listing-postCard">
+                    {postData
+                    .map(postDateString => { 
+                        return { ...postDateString, date: new Date(postDateString.date) } 
+                    })
+                    .sort((a, b) => a.date > b.date ? 1 : -1)
+                    .map((post) => (
                         <PostCard key={post._id} post={ post } />
                     ))}
                 </div>

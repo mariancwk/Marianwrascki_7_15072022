@@ -1,0 +1,32 @@
+.header-content {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    height: 50px;
+    width: 100%;
+    z-index: 9999;
+    
+    gap: 70px;
+    padding: 0px 50px;
+    box-shadow: -6px 6px 8px -2px rgba(0,0,0,0.20);
+    
+    font-weight: 500;
+} 
+
+.header-logo {
+    width: 170px;
+    overflow: hidden;
+}
+
+.header-logo img{
+    width: 100%;
+    transform: translateY(-58px);
+}
+
+.header-btns {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+

@@ -1,10 +1,13 @@
 const Post = require('../models/post')
+const fs = require('fs')
 
 exports.uploadPost = async(req, res, next) => {
-    const post = new Post({
-        userId: req.body.userId,
-        text: req.body.postText
-    })
+    const post = req.file ? new Post({
+        ...req.body,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }) : new Post({
+        ...req.body
+    }) 
 
     try {
         await post.save()
@@ -24,9 +27,67 @@ exports.getAllPosts = async(req, res, next) => {
     }
 }
 
+exports.modifyPost = async (req, res, next) => {
+    let post = req.file ? {
+        userId: req.authUserId, 
+        ...req.body,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    } : {...req.body }
+   
+    if (req.file) {
+        let oldPost = await Post.findOne({ _id: req.body.postId })
+   
+        if (oldPost.imageUrl) {
+            const fileName = oldPost.imageUrl.split('/images/')[1]
+            try {
+                fs.unlink(`images/${fileName}`, (error) => {
+                    if (error) throw error;
+                });
+                
+            } catch (error) {
+                return res.status(400).json({ error })
+            }
+        }
+    }
+
+    try {
+        await Post.updateOne({ _id: req.params.id }, {...post, _id: req.params.id })
+        return res.status(200).json({ message: 'Post modified' })
+
+    } catch (error) {
+        return res.status(400).json({ message: 'Cannot update' })
+    }
+}
+
+exports.deletePost = async(req, res, next) => {
+    let post
+
+    try {
+        post = await Post.findOne({ _id: req.params.id })
+    } catch (error) {
+        res.status(400).json({ error })
+    }
+    
+    if (!post.imageUrl) {
+        post.deleteOne()
+        return res.status(200).json({ message: 'post deleted' })
+    }
+    
+    const fileName = post.imageUrl.split('/images/')[1]
+
+    try {
+        fs.unlink(`images/${fileName}`, () => {
+            post.deleteOne()
+        })
+        res.status(200).json({ message: 'post deleted' })
+    } catch (error) {
+        res.status(400).json({ error })
+    }
+}
+
 exports.likePost = async(req, res, next) => {
-    const filter = req.params.id
-    const updateUsersLiked = { usersLiked: req.body.userId }
+    const filter = req.body.postId
+    const updateUsersLiked = { usersLiked: req.authUserId }
     
     let post = await Post.findById(filter)
 
@@ -35,7 +96,7 @@ exports.likePost = async(req, res, next) => {
     }
     
     const { like } = req.body
-    const userHasLiked = post.usersLiked.includes(req.body.userId)
+    const userHasLiked = post.usersLiked.includes(req.authUserId)
 
     if ([1].includes(like) && (userHasLiked)) {
         return res.status(401).json({ message: "Unauthorized action" })
@@ -56,6 +117,7 @@ exports.likePost = async(req, res, next) => {
                 break
         }   
         return res.status(200).json({ message: 'like accepted' })
+
     } catch (error) {
         return res.status(400).json({ error })
     }

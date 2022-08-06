@@ -1,0 +1,103 @@
+.postContainer {
+    display: flex;
+    justify-content: center;
+
+    padding: 80px 20px 0px;
+}
+
+.postCard {
+    position: relative;
+    margin-bottom: 20px;
+    width: 400px;
+    border: 1px solid rgb(128, 128, 128, 0.3);
+    border-radius: 5px;
+    background: white;
+}
+
+.user-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 10px;
+    gap: 10px;
+}
+
+.user-infos {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar-bloc {
+    width: 40px;
+    border: 1px solid rgb(128, 128, 128, 0.5);
+    border-radius: 30px;
+    overflow: hidden;
+}
+.avatar-bloc img {
+    width: 100%;
+}
+
+.post-txt {
+    padding: 0px 10px 10px;
+}
+
+.post-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.post-img img{
+    width: 100%;
+}
+
+.post-interact {
+    padding: 10px 20px;
+}
+
+.post-interact button {
+    width: 25px;
+}
+
+.like-bloc {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.modify-btn {
+    width: 17px;
+    background: transparent;
+    border-radius: 5px;
+}
+
+.modify-btn :hover {
+    background:  rgb(128, 128, 128, 0.3);
+    transition: 0.2s all ease-in-out;
+    border-radius: 5px;
+
+}
+
+.delete-btn {
+    margin-left: 20px;
+    width: 17px;
+    border-radius: 5px;
+}
+
+.delete-btn :hover {
+    background:  rgb(128, 128, 128, 0.3);
+    transition: 0.2s all ease-in-out;
+    border-radius: 5px;
+}
+
+.editPost-popup {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    background: white;
+}

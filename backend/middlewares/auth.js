@@ -16,6 +16,7 @@ module.exports = async(req, res, next) => {
         
         // auth user id from database not from client
         req.authUserId = userId
+        req.userRole = user.role
 
         next()
     } catch (error) {
