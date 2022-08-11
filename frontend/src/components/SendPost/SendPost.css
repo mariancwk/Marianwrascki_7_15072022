@@ -1,5 +1,38 @@
+.sendPost-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    max-height: 750px;
+    z-index: 100;
+    overflow-y: auto;
+    overflow-x: clip;
+
+    padding: 0px 10px 10px 10px;
+    background: white;
+    border-radius: 5px;
+    
+}
+
+.sendPost-popup > button {
+    height: 30px!important;
+    width: 30px!important;
+    transform: translate(444px, 10px);
+
+    font-weight: 500;
+
+    border-radius: 50px;
+}
+
 .post-component {
-    height: 100%;
+    position: relative;
+}
+
+.post-component h3 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .post-component form {
@@ -7,39 +40,112 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    gap: 15px;
 }
 
 .post-component textarea {
     width: 90%;
-    height: 130px;
+    resize: none;
+    outline: none;
+    margin: 30px 0px;
 }
 
-.post-options--img {
+.sendPost-popup .post-options {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px;
+
+    gap: 20px;
+    border-radius: 5px;
+    border: 1px solid rgb(128, 128, 128, 0.5);
+
+    font-size: 15px;
+}
+
+.sendPost-popup .post-options .imgBtn {
+    width: 30px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.sendPost-popup .post-options .imgBtn :hover {
+    background:  rgb(128, 128, 128, 0.3);
+    transition: 0.2s all ease-in-out;
+    border-radius: 5px;
+}
+
+
+.post-options--imgInput {
     display: none;
 }
 
 .post-img--preview {
-    width: 20%;
+    position: relative;
 }
 
 .post-img--preview img{
     width: 100%;
 }
 
-.editPost-img {
-    max-width: 273px;
+.post-img--preview  button {
+    position: absolute;
+    top: 10px;
+    left: 427px;
+    height: 30px!important;
+    width: 30px!important;
+    
+    background: white;
+    border: 1px solid rgb(128, 128, 128, 0.3);
+    border-radius: 50px;
+    
+    font-weight: 500;
 }
 
-.editPost-popup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 10px;
+.img-preview-wrapper {
+    max-height: 400px;
+    overflow: auto;
+
+    border:1px solid rgb(128, 128, 128, 0.3) ;
+    border-radius: 5px;
+    padding: 10px;
 }
 
-.editPost-popup form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.post-component .btn-primary {
+    width: 100%;
 }
 
+.sendPost-popup .login-alert {
+    position: absolute;
+    top: -94px;
+}
+
+
+@media screen and (max-width: 500px) {
+    .sendPost-popup {
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        width: 100%;
+        max-height: 750px;
+
+        transform: unset;
+        overflow: auto;
+    }
+
+    .sendPost-popup > button {
+        transform: translate(84vw, 10px)
+    }
+
+    .post-img--preview button {
+        left: 84vw;
+    }
+}
+
+
+.no-scrolling {
+    height: 100vh;
+    overflow-y: hidden;
+}

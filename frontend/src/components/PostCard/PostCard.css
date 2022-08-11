@@ -12,6 +12,9 @@
     border: 1px solid rgb(128, 128, 128, 0.3);
     border-radius: 5px;
     background: white;
+
+    word-wrap: break-word;
+    text-align: justify;
 }
 
 .user-content {
@@ -100,4 +103,19 @@
     height: 100%;
     width: 100%;
     background: white;
+}
+
+@media screen and (max-width: 460px) {
+    .postContainer {
+        padding: 80px 0px 0px;
+    }
+
+    .postCard {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .sendPost-popup .login-alert {
+        top: 84px;
+    }
 }

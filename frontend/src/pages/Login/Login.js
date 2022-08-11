@@ -6,24 +6,30 @@ import Modal from '../../components/Modal';
 import SignUp from '../../components/SignUp/SignUp';
 import FormInput from '../../components/FormInput/FormInput';
 import './Login.css'
+import ApiAlerts from '../../components/ApiAlerts/ApiAlerts';
+
+let isSending = false
 
 const Login = () => {
     let navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    
+    const [errorMsg, setErrorMsg] = useState('')
 
     const HandleSubmit =  async (e) => {
         e.preventDefault()
+        isSending = true
 
         try {
             await loginUser(email, password)
+            isSending = false
             navigate("/Feed")
         } catch (error) {
+            isSending = false
             console.log(error)
+            setErrorMsg(error.response.data.error)
         }
-
     }
 
     return (
@@ -48,22 +54,23 @@ const Login = () => {
                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.* )(?=.*[!@#$%^&*_=+-]).{8,30}\S*$"
                     required="true"/>
 
-                    <button className="btn btn-primary">Se connecter</button>
+                    <button 
+                    className={`btn btn-primary ${isSending ? "loading" : ""}`} 
+                    disabled={!email || !password} >Se connecter</button>
                 </form>
 
                 <button 
                 className='btn btn-outline btn-secondary modal-button' 
-                onClick={() => setIsOpen(true)} >S'inscrire
+                onClick={() => setIsOpen(true)}>S'inscrire
                 </button>
 
-                <div>
                 <Modal 
                     open={isOpen} 
                     onClose={() => setIsOpen(false)} >
                     <SignUp/>
                 </Modal>
 
-                </div>
+                <ApiAlerts errorMsg={errorMsg} />
             </div>
         </div>
     );

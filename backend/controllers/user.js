@@ -27,7 +27,7 @@ exports.signup = async(req, res, next) => {
 
     //Check if the email is already used 
     if (await User.findOne({ email: user.email })) {
-        return res.status(400).json({ message: 'Email already used' })
+        return res.status(400).json({ error: 'Email already used' })
     }
     
     try {

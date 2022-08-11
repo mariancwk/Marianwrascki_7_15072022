@@ -38,7 +38,7 @@
 .login-container::before {
     content: "";
     position: absolute;
-    top: 260px;
+    top: 269px;
     height: 1px;
     width: 90%;
     background: red;
@@ -49,6 +49,7 @@
     justify-content: space-evenly;
     flex-direction: column;
     align-items: center;
+    position: relative;
 
     height: 70%;
 
@@ -76,6 +77,11 @@
 .btn-primary {
     background: #FD2D01;
     color: white;
+}
+
+.login-container .login-alert {
+    position: absolute;
+    top: 375px;
 }
 
 @media screen and (max-width: 1140px) {

@@ -7,8 +7,7 @@ const Feed = () => {
     const [postData, setPostData] = useState([])
 
     useEffect(() => {
-        axios.get('/post')
-        .then((res) => { setPostData(res.data) })
+        axios.get('/post').then((res) => { setPostData(res.data) })
     }, [])
 
     return ( 
@@ -17,15 +16,14 @@ const Feed = () => {
             <div className="postContainer">
                 <div className="listing-postCard">
                     {postData
-                    .map(postDateString => { 
-                        return { ...postDateString, date: new Date(postDateString.date) } 
-                    })
-                    .sort((a, b) => a.date > b.date ? 1 : -1)
+                    .map(postDateString => ({ ...postDateString, date: new Date(postDateString.uploadTime) }))
+                    .sort((a, b) => a.date > b.date ? -1 : 1)
                     .map((post) => (
                         <PostCard key={post._id} post={ post } />
                     ))}
                 </div>
             </div>
+        
         </div>
     );
 };

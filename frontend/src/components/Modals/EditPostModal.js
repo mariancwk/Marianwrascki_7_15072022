@@ -1,15 +1,19 @@
 import React from 'react';
+import ReactDom from 'react-dom'
+
 
 const EditPostModal = ({ children, open, onClose }) => {
     if (!open) return null
 
-    return (
+    return ReactDom.createPortal(
         <>
+            <div className="blur-layout"></div>
             <div className="editPost-popup">
-                { children }
                 <button className='btn-ghost' onClick={onClose} >Annuler</button>
+                { children }
             </div>
-        </>
+        </>,
+        document.getElementById('portal')
     );
 };
 

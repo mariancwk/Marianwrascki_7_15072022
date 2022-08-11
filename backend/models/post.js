@@ -6,7 +6,8 @@ const postSchema = mongoose.Schema({
     text: {type: String, required: true},
     imageUrl: {type: String},
     usersLiked: { type: Array },
-    uploadTime: { type: Date, required: true }
+    uploadTime: { type: Date, required: true },
+    textareaHeight: { type: String }
 })
 
 module.exports = mongoose.model('Post', postSchema)

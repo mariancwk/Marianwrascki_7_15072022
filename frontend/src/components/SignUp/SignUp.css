@@ -6,7 +6,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1000;
+    z-index: 100;
     padding-top: 30px;
 
     height: 425px;
@@ -36,7 +36,7 @@
     right: 0px;
     bottom: 0px;
     background: rgba(0,0,0,0.70);
-    z-index: 1000;
+    z-index: 100;
 }
 
 .signUp-form h2 {
@@ -57,6 +57,10 @@
     width: 90%;
 }
 
+.signUp-form .formInput {
+    width: 95%;
+}
+
 .signUp-form .formInput input {
     width: 95%;
     font-size: 18px;
@@ -64,6 +68,10 @@
 
 .signUp-form input::placeholder {
     font-size: 18px;
+}
+
+.signUp-popup .login-alert {
+    top: 440px!important;
 }
 
 @media screen and (max-width: 460px) {

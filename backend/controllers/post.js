@@ -28,15 +28,34 @@ exports.getAllPosts = async(req, res, next) => {
 }
 
 exports.modifyPost = async (req, res, next) => {
+    let oldPost = await Post.findOne({ _id: req.params.id })
+
     let post = req.file ? {
         userId: req.authUserId, 
         ...req.body,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : {...req.body }
-   
+    } : {...req.body,
+        userId: req.authUserId }
+
+    if (!req.file && oldPost.imageUrl) {
+        if (oldPost.imageUrl) {
+            const fileName = oldPost.imageUrl.split('/images/')[1]
+            try {
+                fs.unlink(`images/${fileName}`, (error) => {
+                    if (error) throw error;
+                });
+                post = {
+                    ...req.body,
+                    imageUrl:""
+                }  
+
+            } catch (error) {
+                return res.status(400).json({ error })
+            }
+        }
+    }
+
     if (req.file) {
-        let oldPost = await Post.findOne({ _id: req.body.postId })
-   
         if (oldPost.imageUrl) {
             const fileName = oldPost.imageUrl.split('/images/')[1]
             try {

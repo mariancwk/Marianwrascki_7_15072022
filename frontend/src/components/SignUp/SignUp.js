@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUpUser, loginUser } from '../../lib/api'
+import ApiAlerts from '../ApiAlerts/ApiAlerts';
 import FormInput from '../FormInput/FormInput';
 import './SignUp.css'
+
+let isSending = false
 
 const SignUp = () => {
     let navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
 
     const HandleSubmit = async (e) => {
         e.preventDefault()
+        isSending = true
 
         try {
             await signUpUser(email, password)
             await loginUser(email, password)
+            isSending = false
             navigate('/Feed')
 
         } catch (error) {
+            isSending = false
             console.log(error)
+            setErrorMsg(error.response.data.error)
         }
     }
 
@@ -43,8 +51,11 @@ const SignUp = () => {
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.* )(?=.*[!@#$%^&*_=+-]).{8,30}\S*$"
                 required="true"/>
 
-                <button className="btn btn-primary" >S'inscrire</button>
+                <button className={`btn btn-primary ${isSending ? "loading" : ""}`}
+                disabled={!email || !password} >S'inscrire</button>
             </form>
+
+            <ApiAlerts errorMsg={errorMsg} />
         </div>
     );
 };

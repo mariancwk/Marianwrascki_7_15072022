@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { sendDelete, sendLike, sendModify } from '../../lib/api';
+import { sendDelete, sendLike } from '../../lib/api';
 import './PostCard.css'
 import EditPostModal from '../Modals/EditPostModal';
 import EditPost from '../EditPost/EditPost';
@@ -7,12 +7,11 @@ import Like from '../../svg/Like';
 import ModifySVG from '../../svg/Modify';
 import TrashSVG from '../../svg/Trash';
 
-// On déstrucutre l'objet pour éviter de répéter props.post via feed 
 const likedColor = '#33a867'
 const unlikedColor = 'GREY'
-const userJSON = localStorage.getItem('user')
-const user = JSON.parse(userJSON)
+const user = JSON.parse(localStorage.getItem('user'))
 
+// On déstrucutre l'objet pour éviter de répéter props.post via feed 
 const PostCard = ({ post }) => { 
     const [isOpen, setIsOpen] = useState(false)   
     const [isPostLiked, setIsPostLiked] = useState(false)
@@ -21,20 +20,19 @@ const PostCard = ({ post }) => {
     const [isOwner, setIsOwner] = useState(false)
 
     useEffect(() => {
-
         if (post.usersLiked.includes(user.id)) {
             setSvgColor(likedColor)
             return setIsPostLiked(true)
         }
         return setIsPostLiked(false)
-    }, [])
+    }, [post.usersLiked])
 
     useEffect(() => {
         if (user.role === 'admin' || post.userId === user.id) {
            return setIsOwner(true) 
         }
         return setIsOwner(false)
-    }, [])
+    },[post.userId])
 
     const HandleLike = async (e) => {
         e.preventDefault()
@@ -60,15 +58,6 @@ const PostCard = ({ post }) => {
         }
     }
 
-    const HandleModify = async (e) => {
-        e.preventDefault()
-        try {
-            await sendModify(post._id)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     return (
         <div className="postCard">
             <div className="user-content">
@@ -80,7 +69,12 @@ const PostCard = ({ post }) => {
                 </div>
                 <div className="user-options" 
                 style={{display: isOwner ? 'block' : 'none' }}  >
-                    <button className='modify-btn' onClick={() => setIsOpen(true)} > <ModifySVG /> </button>
+                    <button 
+                        className='modify-btn' 
+                        onClick={() => {
+                            setIsOpen(true)
+                            document.body.classList.add('no-scrolling')}} > <ModifySVG /> </button>
+                            
                     <button className='delete-btn' onClick={HandleDelete} > <TrashSVG /> </button>
                 </div>
             </div>
@@ -96,12 +90,14 @@ const PostCard = ({ post }) => {
                 </div> 
             </div>
 
-                <EditPostModal
-                    open={isOpen} 
-                    onClose={() => setIsOpen(false)} >
-                    <EditPost 
-                        post={ post }/>
-                </EditPostModal>
+            <EditPostModal
+                open={isOpen} 
+                onClose={() => {
+                    setIsOpen(false)
+                    document.body.classList.remove('no-scrolling')}} >
+                        
+                <EditPost post={ post }/>
+            </EditPostModal>
 
         </div>
     );
