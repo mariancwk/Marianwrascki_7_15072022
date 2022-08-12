@@ -7,11 +7,11 @@ exports.ownerPost = async (req, res, next) => {
         post = await Post.findOne({ _id: req.params.id })
 
     } catch {
-        return res.status(400).json({ message: "Post doesn't exist" })
+        return res.status(400).json({ error: "Post doesn't exist" })
     }
     if (req.userRole === 'admin' || req.authUserId === post.userId) {
         return next()
     }
-    return res.status(400).json({ message: 'not allowed' })
+    return res.status(400).json({ error: 'not allowed' })
 }
 

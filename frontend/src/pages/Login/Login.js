@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { loginUser } from '../../lib/api'
 import { useNavigate } from "react-router-dom"
 import Logo from '../../components/Logo/Logo';
-import Modal from '../../components/Modal';
+import SignUpModal from '../../components/Modals/SignUpModal';
 import SignUp from '../../components/SignUp/SignUp';
 import FormInput from '../../components/FormInput/FormInput';
 import './Login.css'
@@ -64,11 +64,11 @@ const Login = () => {
                 onClick={() => setIsOpen(true)}>S'inscrire
                 </button>
 
-                <Modal 
+                <SignUpModal 
                     open={isOpen} 
                     onClose={() => setIsOpen(false)} >
                     <SignUp/>
-                </Modal>
+                </SignUpModal>
 
                 <ApiAlerts errorMsg={errorMsg} />
             </div>

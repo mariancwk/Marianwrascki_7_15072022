@@ -4,9 +4,11 @@ const fs = require('fs')
 exports.uploadPost = async(req, res, next) => {
     const post = req.file ? new Post({
         ...req.body,
+        userId: req.authUserId, 
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     }) : new Post({
-        ...req.body
+        ...req.body,
+        userId: req.authUserId, 
     }) 
 
     try {
@@ -31,11 +33,9 @@ exports.modifyPost = async (req, res, next) => {
     let oldPost = await Post.findOne({ _id: req.params.id })
 
     let post = req.file ? {
-        userId: req.authUserId, 
         ...req.body,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : {...req.body,
-        userId: req.authUserId }
+    } : {...req.body }
 
     if (req.body.isImgDeleted) {
         post = {

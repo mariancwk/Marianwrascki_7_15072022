@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import PostCard from '../components/PostCard/PostCard';
 import Header from '../components/Header/Header'
 import { useDispatch, useSelector } from 'react-redux';
-import { UPDATE_FEED } from '../redux/updateFeed';
+import { UPDATE_FEED } from '../redux/reducers/updateFeed';
 const axios = require('axios')
 
 const Feed = () => {

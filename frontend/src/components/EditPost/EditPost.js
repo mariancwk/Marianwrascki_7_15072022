@@ -4,7 +4,7 @@ import ApiAlerts from '../ApiAlerts/ApiAlerts';
 import './EditPost.css'
 import { sendModify } from '../../lib/api';
 import { useDispatch } from 'react-redux';
-import { UPDATE_FEED } from '../../redux/updateFeed';
+import { UPDATE_FEED } from '../../redux/reducers/updateFeed';
 const axios = require('axios')
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i

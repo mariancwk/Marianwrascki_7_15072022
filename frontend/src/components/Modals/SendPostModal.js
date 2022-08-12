@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../SendPost/SendPost.css'
+import '../SendPost/SendPost.css'
 
 const SendPostModal = ({ children, open, onClose }) => {
     if (!open) return null

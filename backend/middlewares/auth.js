@@ -14,7 +14,7 @@ module.exports = async(req, res, next) => {
             return res.status(401).json({ error: 'Auth : Invalid user!' })
         }
         
-        // auth user id from database not from client
+        // auth user id & Role from database not from client
         req.authUserId = userId
         req.userRole = user.role
 

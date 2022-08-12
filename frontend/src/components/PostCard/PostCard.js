@@ -4,7 +4,7 @@ import './PostCard.css'
 import EditPostModal from '../Modals/EditPostModal';
 import EditPost from '../EditPost/EditPost';
 import { useDispatch } from 'react-redux';
-import { UPDATE_FEED } from '../../redux/updateFeed';
+import { UPDATE_FEED } from '../../redux/reducers/updateFeed';
 import Like from '../../svg/Like';
 import ModifySVG from '../../svg/Modify';
 import TrashSVG from '../../svg/Trash';
@@ -81,8 +81,11 @@ const PostCard = ({ post }) => {
                     <button 
                         className='modify-btn' 
                         onClick={() => {
-                            setIsOpen(true)
-                            document.body.classList.add('no-scrolling')}} > <ModifySVG /> </button>
+                            if (isOwner) {
+                                setIsOpen(true)
+                                return document.body.classList.add('no-scrolling')}
+                            return setIsOpen(false)}  
+                            }> <ModifySVG /> </button>
                             
                     <button className='delete-btn' onClick={HandleDelete} > <TrashSVG /> </button>
                 </div>

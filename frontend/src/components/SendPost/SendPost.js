@@ -4,11 +4,9 @@ import './SendPost.css'
 import ApiAlerts from '../ApiAlerts/ApiAlerts';
 import { setInputHeight } from '../../lib/setInputHeight';
 import { useDispatch } from 'react-redux';
-import { UPDATE_FEED } from '../../redux/updateFeed';
+import { UPDATE_FEED } from '../../redux/reducers/updateFeed';
 
 const imageMimeType = /image\/(png|jpg|jpeg|webp)/i;
-const userJSON = localStorage.getItem('user')
-const user = JSON.parse(userJSON)
 let isSending = false
 
 const SendPost = () => {
@@ -55,7 +53,6 @@ const SendPost = () => {
         isSending = true
         const formData = new FormData(e.target)
 
-        formData.append('userId'  , user.id)
         formData.append('uploadTime', Date.now())
         formData.append('textareaHeight', textareaHeight)
         
@@ -68,8 +65,8 @@ const SendPost = () => {
           })
           await axios.get('/post').then((res) => { 
             dispatch({ type: UPDATE_FEED, payload: res.data })
+            isSending = false
          }) 
-          isSending = false
 
         } catch (error) {
             console.log(error)
