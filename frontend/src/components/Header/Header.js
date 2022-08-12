@@ -11,7 +11,7 @@ const Header = () => {
     const HandleLogout = async (e) => {
         e.preventDefault()
         localStorage.removeItem('JWT')
-        localStorage.removeItem('userId')
+        localStorage.removeItem('user')
         navigate('/Login')
     }
 

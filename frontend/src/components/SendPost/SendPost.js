@@ -3,6 +3,8 @@ import axios from 'axios'
 import './SendPost.css'
 import ApiAlerts from '../ApiAlerts/ApiAlerts';
 import { setInputHeight } from '../../lib/setInputHeight';
+import { useDispatch } from 'react-redux';
+import { UPDATE_FEED } from '../../redux/updateFeed';
 
 const imageMimeType = /image\/(png|jpg|jpeg|webp)/i;
 const userJSON = localStorage.getItem('user')
@@ -15,6 +17,7 @@ const SendPost = () => {
     const [errorMsg, setErrorMsg] = useState('')
     const [textarea, setTextarea] = useState('')
     const [textareaHeight, setTextareaHeight] = useState(60)
+    const dispatch = useDispatch()  
 
     const changeHandler = (e) => {
         const file = e.target.files[0];
@@ -55,7 +58,6 @@ const SendPost = () => {
         formData.append('userId'  , user.id)
         formData.append('uploadTime', Date.now())
         formData.append('textareaHeight', textareaHeight)
-        console.log(textareaHeight)
         
         try {
           await axios({
@@ -64,14 +66,16 @@ const SendPost = () => {
               data: formData,
               headers: { "Content-Type": "multipart/form-data" },
           })
+          await axios.get('/post').then((res) => { 
+            dispatch({ type: UPDATE_FEED, payload: res.data })
+         }) 
           isSending = false
 
         } catch (error) {
             console.log(error)
             isSending = false
             return setErrorMsg(error.response.data.error.errors.text.message || 'Erreur, veuillez réessayer')
-            
-        }
+          }
     }
 
     return (

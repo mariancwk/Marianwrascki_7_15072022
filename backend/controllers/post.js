@@ -37,21 +37,10 @@ exports.modifyPost = async (req, res, next) => {
     } : {...req.body,
         userId: req.authUserId }
 
-    if (!req.file && oldPost.imageUrl) {
-        if (oldPost.imageUrl) {
-            const fileName = oldPost.imageUrl.split('/images/')[1]
-            try {
-                fs.unlink(`images/${fileName}`, (error) => {
-                    if (error) throw error;
-                });
-                post = {
-                    ...req.body,
-                    imageUrl:""
-                }  
-
-            } catch (error) {
-                return res.status(400).json({ error })
-            }
+    if (req.body.isImgDeleted) {
+        post = {
+            ...req.body,
+            imageUrl:""
         }
     }
 

@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import PostCard from '../components/PostCard/PostCard';
 import Header from '../components/Header/Header'
+import { useDispatch, useSelector } from 'react-redux';
+import { UPDATE_FEED } from '../redux/updateFeed';
 const axios = require('axios')
 
 const Feed = () => {
-    const [postData, setPostData] = useState([])
+    const dispatch = useDispatch()   
+    const postData = useSelector(state => state.posts);
 
-    useEffect(() => {
-        axios.get('/post').then((res) => { setPostData(res.data) })
-    }, [])
+    useEffect(()=> {
+        axios.get('/post').then((res) => { 
+            dispatch({ type: UPDATE_FEED, payload: res.data })
+         }) 
+    },[])
 
     return ( 
         <div>
@@ -23,7 +28,6 @@ const Feed = () => {
                     ))}
                 </div>
             </div>
-        
         </div>
     );
 };

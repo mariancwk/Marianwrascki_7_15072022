@@ -3,22 +3,22 @@ axios.defaults.baseURL = 'http://localhost:3000/api'
 axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('JWT')
 
 async function signUpUser( email, password) {
-    await axios.post("auth/signup", { email, password })
+  await axios.post("auth/signup", { email, password })
 }
 
 async function loginUser(email, password) {
-    const res = await axios.post("auth/login" , { email, password })
-
-    localStorage.setItem('JWT', res.data.token) 
-    
+  const res = await axios.post("auth/login" , { email, password })
+  
+  localStorage.setItem('JWT', res.data.token) 
+  
     axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.token
-
+    
     localStorage.setItem('user', JSON.stringify({
       id: res.data.userId,
       role: res.data.role
     })) 
-}
-
+  }
+  
 async function sendLike(postId, like) {
   try {
     await axios.post("/post/:id/like" , {like, postId})
@@ -42,11 +42,4 @@ async function sendModify(formData, postId) {
 })
 }
 
-async function getOnePost(postId) {
-  await axios.get('/post/:id', postId) 
-}
-
-
-
-
-export { signUpUser, loginUser, sendLike, sendDelete, sendModify, getOnePost }
+export { signUpUser, loginUser, sendLike, sendDelete, sendModify }

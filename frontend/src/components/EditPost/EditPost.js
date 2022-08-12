@@ -3,6 +3,9 @@ import { setInputHeight } from '../../lib/setInputHeight';
 import ApiAlerts from '../ApiAlerts/ApiAlerts';
 import './EditPost.css'
 import { sendModify } from '../../lib/api';
+import { useDispatch } from 'react-redux';
+import { UPDATE_FEED } from '../../redux/updateFeed';
+const axios = require('axios')
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i
 
@@ -11,6 +14,7 @@ const EditPost = ({ post }) => {
     const [file, setFile] = useState(null)
     const [fileDataURL, setFileDataURL] = useState(post.imageUrl)
     const [errorMsg, setErrorMsg] = useState('')
+    const dispatch = useDispatch()  
 
     const changeHandler = (e) => {
       const file = e.target.files[0];
@@ -41,7 +45,6 @@ const EditPost = ({ post }) => {
             fileReader.abort();
           }
         }
-    
     }, [file]);
 
     const HandleSubmit = async (e) => {
@@ -49,13 +52,16 @@ const EditPost = ({ post }) => {
       const formData = new FormData(e.target)
 
       try {
-        sendModify(formData, post._id)
+        await sendModify(formData, post._id)
+
+        await axios.get('/post').then((res) => { 
+          dispatch({ type: UPDATE_FEED, payload: res.data })
+       }) 
 
       } catch (error) {
           console.log(error)
-          return setErrorMsg(error.response.data.error.errors.text.message || 'Erreur, veuillez réessayer')
-          
-      }
+          return setErrorMsg(error.response.data.error.errors.text.message || 'Erreur, veuillez réessayer')  
+        }
     }
 
     return (

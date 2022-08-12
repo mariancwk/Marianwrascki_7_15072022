@@ -7,7 +7,6 @@ const handlerUpload = require('../middlewares/multer-config')
 const authzPost = require('../middlewares/authzPost')
 
 router.get('/post',auth, postCtrl.getAllPosts)
-router.get('/post/:id',auth,)
 router.post('/post', auth, handlerUpload, postCtrl.uploadPost)
 router.post('/post/:id/like',auth, postCtrl.likePost)
 router.put('/post/:id',auth, handlerUpload, postCtrl.modifyPost)

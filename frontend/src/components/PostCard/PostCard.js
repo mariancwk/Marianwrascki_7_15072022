@@ -3,9 +3,12 @@ import { sendDelete, sendLike } from '../../lib/api';
 import './PostCard.css'
 import EditPostModal from '../Modals/EditPostModal';
 import EditPost from '../EditPost/EditPost';
+import { useDispatch } from 'react-redux';
+import { UPDATE_FEED } from '../../redux/updateFeed';
 import Like from '../../svg/Like';
 import ModifySVG from '../../svg/Modify';
 import TrashSVG from '../../svg/Trash';
+const axios = require('axios')
 
 const likedColor = '#33a867'
 const unlikedColor = 'GREY'
@@ -18,6 +21,7 @@ const PostCard = ({ post }) => {
     const [svgColor, setSvgColor] = useState(unlikedColor)
     const [nbrLike, setNbrLike] = useState(post.usersLiked.length)
     const [isOwner, setIsOwner] = useState(false)
+    const dispatch = useDispatch()  
 
     useEffect(() => {
         if (post.usersLiked.includes(user.id)) {
@@ -53,6 +57,11 @@ const PostCard = ({ post }) => {
         e.preventDefault()
         try {
             await sendDelete(post._id)
+
+            await axios.get('/post').then((res) => { 
+                dispatch({ type: UPDATE_FEED, payload: res.data })
+             }) 
+
         } catch (error) {
             console.log(error)
         }
