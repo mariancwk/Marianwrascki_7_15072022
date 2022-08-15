@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SendPost from '../../components/SendPost/SendPost';
 import { SHOW_SEND_POST_MODAL } from '../../redux/reducers/modals';
@@ -38,8 +37,13 @@ const Header = () => {
             onClose={() => {
                 document.body.classList.remove('no-scrolling')
                 setIsPostOpen(false)
-            }} >
-                <SendPost />
+            }}>
+                <SendPost
+                    onPostSent={() => {
+                        document.body.classList.remove('no-scrolling')
+                        setIsPostOpen(false)
+                    }}
+                />
             </SendPostModal>
 
         </div>

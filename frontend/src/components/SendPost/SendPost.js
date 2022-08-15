@@ -7,15 +7,15 @@ import { useDispatch } from 'react-redux';
 import { UPDATE_FEED } from '../../redux/reducers/updateFeed';
 
 const imageMimeType = /image\/(png|jpg|jpeg|webp)/i;
-let isSending = false
 
 // Allows to post a post 
-const SendPost = () => {
+const SendPost = ({ onPostSent }) => {
     const [file, setFile] = useState(null)
     const [fileDataURL, setFileDataURL] = useState(null)
     const [errorMsg, setErrorMsg] = useState('')
     const [textarea, setTextarea] = useState('')
     const [textareaHeight, setTextareaHeight] = useState(60)
+    const [isSending, setIsSending] = useState(false)
     const dispatch = useDispatch()  
 
     // Refresh the file for the form input
@@ -51,10 +51,14 @@ const SendPost = () => {
     
     }, [file]);
 
+
     // Allows to call axios post function & refresh the redux store
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        isSending = true
+      e.preventDefault()
+        if (isSending) return
+        
+
+        setIsSending(true)
         const formData = new FormData(e.target)
 
         formData.append('uploadTime', Date.now())
@@ -69,14 +73,16 @@ const SendPost = () => {
           })
           await axios.get('/post').then((res) => { 
             dispatch({ type: UPDATE_FEED, payload: res.data })
-            isSending = false
+            onPostSent()
+            setIsSending(false)
          }) 
 
         } catch (error) {
             console.log(error)
-            isSending = false
+            setIsSending(false)
             return setErrorMsg(error.response.data.error.errors.text.message || 'Erreur, veuillez réessayer')
           }
+          console.log(isSending)
     }
 
     return (
@@ -125,7 +131,7 @@ const SendPost = () => {
                     />
                 </div>
                 
-                <button type='submit' className={`btn btn-primary ${isSending ? "loading" : ""}`}  disabled={!textarea} >Publier !</button>
+                <button type='submit' className={`btn btn-primary ${isSending ? "loading" : ""}`}  disabled={!textarea && isSending} >Publier !</button>
             </form>
 
             <ApiAlerts errorMsg={errorMsg} />

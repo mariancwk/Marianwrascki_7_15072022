@@ -5,29 +5,28 @@ import ApiAlerts from '../ApiAlerts/ApiAlerts';
 import FormInput from '../FormInput/FormInput';
 import './SignUp.css'
 
-let isSending = false
-
 // Allows to create a user account 
 const SignUp = () => {
     let navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
-
+    const [isSending, setIsSending] = useState(false)
     
     // Allows to call axios post function
     const HandleSubmit = async (e) => {
         e.preventDefault()
-        isSending = true
+        if (isSending) return
+        setIsSending(true)
 
         try {
             await signUpUser(email, password)
             await loginUser(email, password)
-            isSending = false
+            setIsSending(false)
             navigate('/Feed')
 
         } catch (error) {
-            isSending = false
+            setIsSending(false)
             console.log(error)
             setErrorMsg(error.response.data.error)
         }
@@ -55,7 +54,7 @@ const SignUp = () => {
                 required="true"/>
 
                 <button className={`btn btn-primary ${isSending ? "loading" : ""}`}
-                disabled={!email || !password} >S'inscrire</button>
+                disabled={!email || !password || isSending} >S'inscrire</button>
             </form>
 
             <ApiAlerts errorMsg={errorMsg} />

@@ -8,20 +8,21 @@ import { UPDATE_FEED } from '../../redux/reducers/updateFeed';
 import Like from '../../svg/Like';
 import ModifySVG from '../../svg/Modify';
 import TrashSVG from '../../svg/Trash';
-const axios = require('axios')
 
+const axios = require('axios')
 const likedColor = '#33a867'
 const unlikedColor = 'GREY'
-const user = JSON.parse(localStorage.getItem('user'))
 
 // Display the postCard
 // On déstrucutre l'objet pour éviter de répéter props.post via feed 
-const PostCard = ({ post }) => { 
+const PostCard = ({ post }) => {
+    const user = JSON.parse(localStorage.getItem('user'))
     const [isOpen, setIsOpen] = useState(false)   
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [svgColor, setSvgColor] = useState(unlikedColor)
     const [nbrLike, setNbrLike] = useState(post.usersLiked.length)
     const [isOwner, setIsOwner] = useState(false)
+    const [isSending, setIsSending] = useState(false)
     const dispatch = useDispatch()  
 
     // Modify the like btn if the user has liked or not
@@ -31,7 +32,7 @@ const PostCard = ({ post }) => {
             return setIsPostLiked(true)
         }
         return setIsPostLiked(false)
-    }, [post.usersLiked])
+    }, [post.usersLiked, user.id])
 
     // Display or not the edit end delete btns of the postCards
     useEffect(() => {
@@ -39,7 +40,7 @@ const PostCard = ({ post }) => {
            return setIsOwner(true) 
         }
         return setIsOwner(false)
-    },[post.userId])
+    },[post.userId, user.id, user.role])
 
     // Allows to call axios post function 
     const HandleLike = async (e) => {
@@ -60,11 +61,16 @@ const PostCard = ({ post }) => {
     // Allows to call axios delete function & refresh the redux store
     const HandleDelete = async (e) => {
         e.preventDefault()
+
+        if (isSending) return 
+        setIsSending(true)
+
         try {
             await sendDelete(post._id)
 
             await axios.get('/post').then((res) => { 
                 dispatch({ type: UPDATE_FEED, payload: res.data })
+                setIsSending(false)
              }) 
 
         } catch (error) {
@@ -113,7 +119,11 @@ const PostCard = ({ post }) => {
                     setIsOpen(false)
                     document.body.classList.remove('no-scrolling')}} >
                         
-                <EditPost post={ post }/>
+                <EditPost post={ post } 
+                onPostModified={() => {
+                    setIsOpen(false)
+                    document.body.classList.remove('no-scrolling')
+                }}/>
             </EditPostModal>
 
         </div>

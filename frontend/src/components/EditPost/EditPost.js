@@ -10,12 +10,13 @@ const axios = require('axios')
 const imageMimeType = /image\/(png|jpg|jpeg|webp)/i
 
 // Allows to edit a post 
-const EditPost = ({ post }) => {
+const EditPost = ({ post, onPostModified }) => {
     const [txtValue, setTxtValue] = useState(post.text)
     const [file, setFile] = useState(null)
     const [fileDataURL, setFileDataURL] = useState(post.imageUrl)
     const [errorMsg, setErrorMsg] = useState('')
     const [isImgDeleted, setIsImgDeleted] = useState(false)
+    const [isSending, setIsSending] = useState(false)
     const dispatch = useDispatch()  
 
     // Refresh the file for the form input
@@ -54,6 +55,9 @@ const EditPost = ({ post }) => {
     // Allows to call axios post function & refresh the redux store
     const HandleSubmit = async (e) => {
       e.preventDefault()
+      if (isSending) return
+      setIsSending(true)
+
       const formData = new FormData(e.target)
 
       formData.append('isImgDeleted', isImgDeleted)
@@ -63,10 +67,13 @@ const EditPost = ({ post }) => {
 
         await axios.get('/post').then((res) => { 
           dispatch({ type: UPDATE_FEED, payload: res.data })
+          setIsSending(false)
+          onPostModified()
        }) 
 
       } catch (error) {
           console.log(error)
+          setIsSending(false)
           return setErrorMsg(error.response.data.error.errors.text.message || 'Erreur, veuillez réessayer')  
         }
     }
@@ -117,7 +124,7 @@ const EditPost = ({ post }) => {
                   />
                 </div>
 
-                <button type='submit' className='btn btn-primary'  >Modifier</button>
+                <button type='submit' disabled={isSending} className={`btn btn-primary ${isSending ? "loading" : ""}`}  >Modifier</button>
             </form>
 
             <ApiAlerts errorMsg={errorMsg} />

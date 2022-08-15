@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { loginUser } from '../../lib/api'
 import { useNavigate } from "react-router-dom"
 import Logo from '../../components/Logo/Logo';
@@ -8,8 +8,6 @@ import FormInput from '../../components/FormInput/FormInput';
 import './Login.css'
 import ApiAlerts from '../../components/ApiAlerts/ApiAlerts';
 
-let isSending = false
-
 // Allows a user to log to his account
 const Login = () => {
     let navigate = useNavigate()
@@ -17,22 +15,30 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
+    const [isSending, setIsSending] = useState(false)
+    
+    const checkIfAlreadyLoggedAndRedirect = () => {
+        if (localStorage.getItem('JWT')) navigate("/Feed")
+    }
 
     // Allows to call axios post function
     const HandleSubmit =  async (e) => {
         e.preventDefault()
-        isSending = true
+        if  (isSending) return
+        setIsSending(true)
 
         try {
             await loginUser(email, password)
-            isSending = false
+            setIsSending(false)
             navigate("/Feed")
         } catch (error) {
-            isSending = false
+            setIsSending(false)
             console.log(error)
             setErrorMsg(error.response.data.error)
         }
     }
+
+    useEffect(checkIfAlreadyLoggedAndRedirect)
 
     return (
         <div className='login-page' >
@@ -58,7 +64,7 @@ const Login = () => {
 
                     <button 
                     className={`btn btn-primary ${isSending ? "loading" : ""}`} 
-                    disabled={!email || !password} >Se connecter</button>
+                    disabled={!email || !password || isSending} >Se connecter</button>
                 </form>
 
                 <button 

@@ -15,6 +15,7 @@ async function loginUser(email, password) {
   
     axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.token
     
+    console.log('SET ITEM USER')
     localStorage.setItem('user', JSON.stringify({
       id: res.data.userId,
       role: res.data.role
