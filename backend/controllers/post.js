@@ -102,7 +102,7 @@ exports.deletePost = async(req, res, next) => {
 }
 
 exports.likePost = async(req, res, next) => {
-    const filter = req.body.postId
+    const filter = req.params.id
     const updateUsersLiked = { usersLiked: req.authUserId }
     
     let post = await Post.findById(filter)

@@ -24,7 +24,7 @@ async function loginUser(email, password) {
 // Send a request to like a post 
 async function sendLike(postId, like) {
   try {
-    await axios.post("/post/:id/like" , {like, postId})
+    await axios.post(`/post/${postId}/like` , {like})
     return 
     
   } catch (error) {
