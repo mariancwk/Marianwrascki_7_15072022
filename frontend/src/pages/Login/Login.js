@@ -10,6 +10,7 @@ import ApiAlerts from '../../components/ApiAlerts/ApiAlerts';
 
 let isSending = false
 
+// Allows a user to log to his account
 const Login = () => {
     let navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false)
@@ -17,6 +18,7 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
 
+    // Allows to call axios post function
     const HandleSubmit =  async (e) => {
         e.preventDefault()
         isSending = true

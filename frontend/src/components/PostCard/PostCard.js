@@ -14,6 +14,7 @@ const likedColor = '#33a867'
 const unlikedColor = 'GREY'
 const user = JSON.parse(localStorage.getItem('user'))
 
+// Display the postCard
 // On déstrucutre l'objet pour éviter de répéter props.post via feed 
 const PostCard = ({ post }) => { 
     const [isOpen, setIsOpen] = useState(false)   
@@ -23,6 +24,7 @@ const PostCard = ({ post }) => {
     const [isOwner, setIsOwner] = useState(false)
     const dispatch = useDispatch()  
 
+    // Modify the like btn if the user has liked or not
     useEffect(() => {
         if (post.usersLiked.includes(user.id)) {
             setSvgColor(likedColor)
@@ -31,6 +33,7 @@ const PostCard = ({ post }) => {
         return setIsPostLiked(false)
     }, [post.usersLiked])
 
+    // Display or not the edit end delete btns of the postCards
     useEffect(() => {
         if (user.role === 'admin' || post.userId === user.id) {
            return setIsOwner(true) 
@@ -38,6 +41,7 @@ const PostCard = ({ post }) => {
         return setIsOwner(false)
     },[post.userId])
 
+    // Allows to call axios post function 
     const HandleLike = async (e) => {
         e.preventDefault()
 
@@ -53,6 +57,7 @@ const PostCard = ({ post }) => {
         await sendLike(post._id, 0)
     }
 
+    // Allows to call axios delete function & refresh the redux store
     const HandleDelete = async (e) => {
         e.preventDefault()
         try {

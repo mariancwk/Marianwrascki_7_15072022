@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './FormInput.css'
 
+// Variable form input who allows a form cheking
 const FormInput = (props) => {
     const [leaveInput, setLeaveInput] = useState(false)
 

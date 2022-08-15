@@ -6,6 +6,7 @@ import { SHOW_SEND_POST_MODAL } from '../../redux/reducers/modals';
 import SendPostModal from '../Modals/SendPostModal';
 import './Header.css'
 
+// Display the header and the sendpost modal
 const Header = () => {
     let navigate = useNavigate()
     const [isPostOpen, setIsPostOpen] = useState(false)

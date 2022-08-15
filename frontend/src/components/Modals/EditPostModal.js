@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom'
 
-
+// Allows to open the EditPost component
 const EditPostModal = ({ children, open, onClose }) => {
     if (!open) return null
 

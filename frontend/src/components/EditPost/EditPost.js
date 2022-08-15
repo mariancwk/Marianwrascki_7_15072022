@@ -9,6 +9,7 @@ const axios = require('axios')
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i
 
+// Allows to edit a post 
 const EditPost = ({ post }) => {
     const [txtValue, setTxtValue] = useState(post.text)
     const [file, setFile] = useState(null)
@@ -16,6 +17,7 @@ const EditPost = ({ post }) => {
     const [errorMsg, setErrorMsg] = useState('')
     const dispatch = useDispatch()  
 
+    // Refresh the file for the form input
     const changeHandler = (e) => {
       const file = e.target.files[0];
       if (!file.type.match(imageMimeType)) {
@@ -26,7 +28,7 @@ const EditPost = ({ post }) => {
       setFile(file);
     }
 
-
+    // Allows a preview of the file selected from the form input
     useEffect(() => {
         let fileReader, isCancel = false;
         if (file) {
@@ -47,6 +49,7 @@ const EditPost = ({ post }) => {
         }
     }, [file]);
 
+    // Allows to call axios post function & refresh the redux store
     const HandleSubmit = async (e) => {
       e.preventDefault()
       const formData = new FormData(e.target)

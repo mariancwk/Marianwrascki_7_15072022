@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Display a DaisyUI's component with variable error message
 const ApiAlerts = ( {errorMsg} ) => {
 
     if (!errorMsg) {

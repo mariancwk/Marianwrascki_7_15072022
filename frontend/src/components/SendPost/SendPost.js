@@ -9,6 +9,7 @@ import { UPDATE_FEED } from '../../redux/reducers/updateFeed';
 const imageMimeType = /image\/(png|jpg|jpeg|webp)/i;
 let isSending = false
 
+// Allows to post a post 
 const SendPost = () => {
     const [file, setFile] = useState(null)
     const [fileDataURL, setFileDataURL] = useState(null)
@@ -17,16 +18,18 @@ const SendPost = () => {
     const [textareaHeight, setTextareaHeight] = useState(60)
     const dispatch = useDispatch()  
 
+    // Refresh the file for the form input
     const changeHandler = (e) => {
-        const file = e.target.files[0];
-        if (!file.type.match(imageMimeType)) {
-          setErrorMsg('Fichier .png, .jpg, .jpeg, .webp accepté')
-          return;
-        }
-        setErrorMsg('')
-        setFile(file);
+      const file = e.target.files[0];
+      if (!file.type.match(imageMimeType)) {
+        setErrorMsg('Fichier .png, .jpg, .jpeg, .webp accepté')
+        return;
       }
-
+      setErrorMsg('')
+      setFile(file);
+    }
+    
+    // Allows a preview of the file selected from the form input
     useEffect(() => {
         let fileReader, isCancel = false;
         if (file) {
@@ -48,6 +51,7 @@ const SendPost = () => {
     
     }, [file]);
 
+    // Allows to call axios post function & refresh the redux store
     const handleSubmit = async (e) => {
         e.preventDefault()
         isSending = true

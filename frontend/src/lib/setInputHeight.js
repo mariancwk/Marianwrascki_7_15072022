@@ -1,3 +1,4 @@
+// SET the height of the reponsive inputs
 const setInputHeight = (element, defaultHeight) => {
     if (element) {
         const target = element.target ? element.target : element

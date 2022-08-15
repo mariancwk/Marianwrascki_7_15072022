@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Allows to open the SignUp component
 const SignUpModal = ({ children, open, onClose }) => {
     if (!open) return null
 

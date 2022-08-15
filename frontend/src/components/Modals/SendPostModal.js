@@ -1,6 +1,7 @@
 import React from 'react';
 import '../SendPost/SendPost.css'
 
+// Allows to open the SendPost component
 const SendPostModal = ({ children, open, onClose }) => {
     if (!open) return null
 

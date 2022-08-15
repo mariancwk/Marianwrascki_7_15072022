@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UPDATE_FEED } from '../redux/reducers/updateFeed';
 const axios = require('axios')
 
+// Allows to display all posts & refresh the redux store
 const Feed = () => {
     const dispatch = useDispatch()   
     const postData = useSelector(state => state.posts);

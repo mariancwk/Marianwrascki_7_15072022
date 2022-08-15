@@ -7,12 +7,15 @@ import './SignUp.css'
 
 let isSending = false
 
+// Allows to create a user account 
 const SignUp = () => {
     let navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
 
+    
+    // Allows to call axios post function
     const HandleSubmit = async (e) => {
         e.preventDefault()
         isSending = true
