@@ -37,24 +37,32 @@ exports.modifyPost = async (req, res, next) => {
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : {...req.body }
 
-    if (req.body.isImgDeleted) {
+    if (req.body.isImgDeleted === 'true' && oldPost.imageUrl !== null) {
+        const fileName = oldPost.imageUrl.split('/images/')[1]
+       
+        try {
+            fs.unlink(`images/${fileName}`, (error) => {
+                if (error) throw error;
+            });
+            
+        } catch (error) {
+            return res.status(400).json({ error })
+        }
         post = {
             ...req.body,
             imageUrl:""
         }
     }
 
-    if (req.file) {
-        if (oldPost.imageUrl) {
-            const fileName = oldPost.imageUrl.split('/images/')[1]
-            try {
-                fs.unlink(`images/${fileName}`, (error) => {
-                    if (error) throw error;
-                });
-                
-            } catch (error) {
-                return res.status(400).json({ error })
-            }
+    if (req.file && oldPost.imageUrl) {
+        const fileName = oldPost.imageUrl.split('/images/')[1]
+        try {
+            fs.unlink(`images/${fileName}`, (error) => {
+                if (error) throw error;
+            });
+            
+        } catch (error) {
+            return res.status(400).json({ error })
         }
     }
 

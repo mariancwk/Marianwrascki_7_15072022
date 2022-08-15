@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { UPDATE_FEED } from '../../redux/reducers/updateFeed';
 const axios = require('axios')
 
-const imageMimeType = /image\/(png|jpg|jpeg)/i
+const imageMimeType = /image\/(png|jpg|jpeg|webp)/i
 
 // Allows to edit a post 
 const EditPost = ({ post }) => {
@@ -15,6 +15,7 @@ const EditPost = ({ post }) => {
     const [file, setFile] = useState(null)
     const [fileDataURL, setFileDataURL] = useState(post.imageUrl)
     const [errorMsg, setErrorMsg] = useState('')
+    const [isImgDeleted, setIsImgDeleted] = useState(false)
     const dispatch = useDispatch()  
 
     // Refresh the file for the form input
@@ -25,7 +26,8 @@ const EditPost = ({ post }) => {
         return;
       }
       setErrorMsg('')
-      setFile(file);
+      setIsImgDeleted(false)
+      setFile(file)
     }
 
     // Allows a preview of the file selected from the form input
@@ -53,6 +55,8 @@ const EditPost = ({ post }) => {
     const HandleSubmit = async (e) => {
       e.preventDefault()
       const formData = new FormData(e.target)
+
+      formData.append('isImgDeleted', isImgDeleted)
 
       try {
         await sendModify(formData, post._id)
@@ -90,6 +94,7 @@ const EditPost = ({ post }) => {
                             document.getElementById('file').value = ""
                             setFileDataURL(null)
                             setFile(null)
+                            setIsImgDeleted(true)
                         }} >X</button>
                         {
                             <img src={fileDataURL} alt="preview" />
