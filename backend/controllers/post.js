@@ -1,6 +1,7 @@
 const Post = require('../models/post')
 const fs = require('fs')
 
+// Create new post
 exports.uploadPost = async(req, res, next) => {
     const post = req.file ? new Post({
         ...req.body,
@@ -29,6 +30,7 @@ exports.getAllPosts = async(req, res, next) => {
     }
 }
 
+// Modify post 
 exports.modifyPost = async (req, res, next) => {
     let oldPost = await Post.findOne({ _id: req.params.id })
 
@@ -75,6 +77,7 @@ exports.modifyPost = async (req, res, next) => {
     }
 }
 
+// Delete a post 
 exports.deletePost = async(req, res, next) => {
     let post
 
@@ -101,6 +104,7 @@ exports.deletePost = async(req, res, next) => {
     }
 }
 
+// Like a post
 exports.likePost = async(req, res, next) => {
     const filter = req.params.id
     const updateUsersLiked = { usersLiked: req.authUserId }

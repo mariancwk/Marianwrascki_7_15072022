@@ -81,7 +81,7 @@ const EditPost = ({ post, onPostModified }) => {
     return (
         <>
           <h3>Modifier votre post</h3>
-            <form name='post-form' enctype="multipart/form-data" onSubmit={HandleSubmit}>
+            <form name='post-form' encType="multipart/form-data" onSubmit={HandleSubmit}>
                 <textarea 
                 name='text'
                 type="text" 
@@ -113,7 +113,7 @@ const EditPost = ({ post, onPostModified }) => {
                 <div className="post-options">
                   <span>Ajouter à votre publication</span>
 
-                  <label for="file" class="imgBtn"><img src="../images/uploadimg.png" alt="" /></label>
+                  <label htmlFor="file" className="imgBtn"><img src="../images/uploadimg.png" alt="" /></label>
                   <input 
                   id="file"
                   name='image'

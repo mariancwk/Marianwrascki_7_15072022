@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-// Plugin pour améliorer la résolution des erreurs d'email unique 
 const uniqueValidator = require('mongoose-unique-validator')
 
 // User mongoose schema 

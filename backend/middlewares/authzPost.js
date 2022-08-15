@@ -1,5 +1,6 @@
 const Post = require('../models/post')
 
+// Check if the user is the owner of the post or a admin
 exports.ownerPost = async (req, res, next) => {
     let post
     

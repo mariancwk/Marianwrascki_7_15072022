@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SendPost from '../../components/SendPost/SendPost';
-import { SHOW_SEND_POST_MODAL } from '../../redux/reducers/modals';
 import SendPostModal from '../Modals/SendPostModal';
 import './Header.css'
 

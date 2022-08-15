@@ -82,7 +82,6 @@ const SendPost = ({ onPostSent }) => {
             setIsSending(false)
             return setErrorMsg(error.response.data.error.errors.text.message || 'Erreur, veuillez réessayer')
           }
-          console.log(isSending)
     }
 
     return (

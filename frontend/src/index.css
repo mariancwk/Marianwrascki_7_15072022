@@ -8,4 +8,13 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
+:root{
+  --primaryColor: #FD2D01;
+  --secondaryColor: #FFD7D7;
+  /* --tertiaryColor: #4E5166: Hexa dosn't work */
+}
+
+.btn:hover {
+  background: var(--secondaryColor);
+}
 

@@ -16,6 +16,7 @@ const whitelist = [
   ]
 
 const storage = multer.diskStorage({
+    // Create a case if he doesn't exist
     destination: (req, file, callback) => {
         fs.mkdirSync('images', { recursive: true })
         callback(null, 'images')
@@ -23,7 +24,8 @@ const storage = multer.diskStorage({
     filename: (req, file, callback) => {
         const name = file.originalname.split('.')[0].split(' ').join('_')
         const extension = MIME_TYPES[file.mimetype]
-
+        
+        // Validate the file uploaded 
         if (!whitelist.includes(file.mimetype)) {
           return callback(new Error('file is not allowed'))
         }
