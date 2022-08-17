@@ -52,7 +52,8 @@ const Login = () => {
                     placeholder="Email" 
                     setValue={setEmail}
                     errorMsg="Votre email n'est pas valide"
-                    pattern=".(\w\.?)+@groupomania\.[a-z]{2,3}"/>
+                    pattern=".(\w\.?)+@groupomania\.[a-z]{2,3}"
+                    arialabel="email"/>
                     
                     <FormInput 
                     type="password" 
@@ -60,7 +61,8 @@ const Login = () => {
                     setValue={setPassword}
                     errorMsg="Minimum de 8 caractères et maximum de 30 avec une majuscule, un chiffre et un caractère spécial"
                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?!.* )(?=.*[!@#$%^&*_=+-]).{8,30}\S*$"
-                    required="true"/>
+                    required="true"
+                    arialabel="mot de passe"/>
 
                     <button 
                     className={`btn btn-primary ${isSending ? "loading" : ""}`} 

@@ -74,8 +74,13 @@
     height: 50px;
 }
 
+.login-container .btn-secondary {
+    background-color: #545454;
+    color: white;
+}
+
 .btn-primary {
-    background: #FD2D01;
+    background: #981A01;
     color: white;
 }
 

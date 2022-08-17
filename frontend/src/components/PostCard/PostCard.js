@@ -90,6 +90,7 @@ const PostCard = ({ post }) => {
                 <div className="user-options" 
                 style={{display: isOwner ? 'block' : 'none' }}  >
                     <button 
+                        title='bouton modifier post'
                         className='modify-btn' 
                         onClick={() => {
                             if (isOwner) {
@@ -98,7 +99,7 @@ const PostCard = ({ post }) => {
                             return setIsOpen(false)}  
                             }> <ModifySVG /> </button>
                             
-                    <button className='delete-btn' onClick={HandleDelete} > <TrashSVG /> </button>
+                    <button className='delete-btn' onClick={HandleDelete} title='bouton supprimer post' > <TrashSVG /> </button>
                 </div>
             </div>
 

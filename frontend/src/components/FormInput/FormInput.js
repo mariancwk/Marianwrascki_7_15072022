@@ -20,7 +20,8 @@ const FormInput = (props) => {
             className="input"
             onBlur={HandleLeave}
             leaved={leaveInput.toString()}
-            required />
+            required
+            aria-label={props.arialabel} />
             <span> {props.errorMsg} </span>
         </div >
     );

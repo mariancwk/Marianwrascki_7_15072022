@@ -85,6 +85,7 @@ const EditPost = ({ post, onPostModified }) => {
                 <textarea 
                 name='text'
                 type="text" 
+                aria-label="texte du post"
                 placeholder="qu'est ce qu'on a ?"
                 value={txtValue}
                 style={{"height": `${post.textareaHeight}px`}}
@@ -113,7 +114,7 @@ const EditPost = ({ post, onPostModified }) => {
                 <div className="post-options">
                   <span>Ajouter à votre publication</span>
 
-                  <label htmlFor="file" className="imgBtn"><img src="../images/uploadimg.png" alt="" /></label>
+                  <label aria-label="image du post" htmlFor="file" className="imgBtn"><img src="../images/uploadimg.png" alt="ajouter un fichier" /></label>
                   <input 
                   id="file"
                   name='image'

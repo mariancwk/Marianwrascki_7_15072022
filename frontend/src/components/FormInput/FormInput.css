@@ -15,7 +15,7 @@
 .formInput span {
     font-size: 12px;
     padding: 3px;
-    color: white;
+    color: #545454;
     visibility: hidden;
     text-align: center;
     transition: 0.25s all ease-in-out;

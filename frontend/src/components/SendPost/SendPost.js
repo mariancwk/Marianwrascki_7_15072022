@@ -91,6 +91,7 @@ const SendPost = ({ onPostSent }) => {
                 <textarea 
                 name='text'
                 type="text" 
+                aria-label="texte du post"
                 placeholder="qu'est ce qu'on a ?"
                 onChange={(e) => {
                   setTextarea(e.target.value)
@@ -119,7 +120,7 @@ const SendPost = ({ onPostSent }) => {
                 <div className="post-options">
                   <span>Ajouter à votre publication</span>
                     
-                  <label htmlFor="file" className="imgBtn"><img src="../images/uploadimg.png" alt="" /></label>
+                  <label htmlFor="file" className="imgBtn"><img src="../images/uploadimg.png" alt="ajouter un fichier" /></label>
                     <input 
                     id="file"
                     name='image'
